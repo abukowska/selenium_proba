@@ -16,16 +16,14 @@ public class ExcelReader {
 
 	public static void readExcel() {
 
-		Workbook guru99Workbook = null;
+		Workbook workbook = null;
 		try {
 			String filePath = "src//main//resources//Z1.xlsx";
 		    File file = new File(filePath);
 		    FileInputStream inputStream = new FileInputStream(file);
 		    
-		    String fileExtention = filePath.substring(filePath.indexOf("."));
-		    
-		    if (fileExtention.equals(".xlsx")) {
-		    	guru99Workbook = new XSSFWorkbook(inputStream);
+		    if (filePath.endsWith(".xlsx")) {
+		    	workbook = new XSSFWorkbook(inputStream);
 		    }
 		    inputStream.close();
 		    
@@ -34,9 +32,9 @@ public class ExcelReader {
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
-	    Sheet guru99Sheet = guru99Workbook.getSheet("Arkusz1");
+	    Sheet sheet = workbook.getSheet("Arkusz1");
 
-	    Iterator<Row> rowIter = guru99Sheet.iterator();
+	    Iterator<Row> rowIter = sheet.iterator();
 	    
 	    while(rowIter.hasNext()) {
 	        Row row = rowIter.next();
