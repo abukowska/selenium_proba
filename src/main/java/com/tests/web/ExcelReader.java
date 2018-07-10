@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -35,21 +36,38 @@ public class ExcelReader {
 		Sheet sheet = workbook.getSheet("Arkusz1");
 
 		Iterator<Row> rowIter = sheet.iterator();
+		
+		ArrayList<String> lista = new ArrayList<>();
 
 		while (rowIter.hasNext()) {
+			String k = null;
 			Row row = rowIter.next();
 			for (int j = 1; j < 4; j++) {
+				if (row.getCell(1) == null) break;
 				if (row.getCell(j) == null) continue;
-
+				
+				k = null;
+				
 				if (j == 3) {
 					DataFormatter dataFormatter = new DataFormatter();
 					String cellStringValue = dataFormatter.formatCellValue(row.getCell(j));
+					k = cellStringValue;
 					System.out.print(cellStringValue);
 				} else {
-					System.out.print(row.getCell(j).getStringCellValue() + " | ");
+					k = row.getCell(j).getStringCellValue();
+					System.out.print(k + " | ");
 				}
 			}
+			
+			if (row.getCell(1) != null) {
+				lista.add(k);
+			}
+			
 			System.out.println();
+		}
+		
+		for (String element : lista) {
+			System.out.println("***" + element);
 		}
 	}
 
